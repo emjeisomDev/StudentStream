@@ -1,9 +1,10 @@
 package student;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
-public class Student {
+public class Student extends StudentsList {
 	
 	private Integer registration;
 	private String name;
@@ -14,7 +15,9 @@ public class Student {
 	private LocalDate registrationDate;
 	private LocalDate birthDate;
 	
-	public Student() {}
+	public Student() {
+		
+	}
 	
 	public Student(Integer registration, String name, String gender, Integer age, String course, Double grade,
 			LocalDate registrationDate, LocalDate birthDate) {
@@ -32,6 +35,10 @@ public class Student {
 	public String toString() {
 		return "{registration: " + registration + ", name: " + name + ", gender: " + gender + ", age: " + age + ", course: " + course + ", grade: " + grade + ", registrationDate: " + registrationDate + ", birthDate: " + birthDate + "}";
 	}
+	
+    public List<Student> getStudents() {
+        return StudentsList.getAllStudents();
+    }
 
 	public Integer getRegistration() {
 		return registration;
