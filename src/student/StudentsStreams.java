@@ -16,4 +16,14 @@ public class StudentsStreams {
 					   .toList();
 	}
 	
+	public List<StudentShortListRecord> StudentByBirthDate(Integer month, Integer year){
+		return students.stream()
+					     .filter(std -> std.getBirthDate().getMonthValue() == month && std.getBirthDate().getYear() == year)
+					     .map(std -> new StudentShortListRecord(
+									  std.getRegistration(), 
+									  std.getName(), 
+									  std.getCourse()))
+					     .toList();
+	}
+	
 }
