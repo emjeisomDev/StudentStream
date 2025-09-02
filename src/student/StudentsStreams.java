@@ -66,4 +66,18 @@ public class StudentsStreams {
 						 .toList();
 	}
 	
+	public List<StudentsShortListGradesRecord> filterTop10Grades(String course){
+		return students.stream()
+						 .filter(std -> std.getCourse().equals(course.toLowerCase()))
+						 .sorted(Comparator.comparing(Student::getGrade).reversed())
+						 .map(std -> new StudentsShortListGradesRecord(
+								 std.getRegistration(), 
+								 std.getName(),
+								 std.getGrade()
+								 ))
+						 .limit(10)
+						 .toList();
+	}
+	
+	
 }
