@@ -1,9 +1,11 @@
 package student;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import student.records.StudentShortListRecord;
+import student.records.StudentsShortListGradesRecord;
 
 public class StudentsStreams {
 	List<Student> students = new Student().getStudents();
@@ -50,6 +52,18 @@ public class StudentsStreams {
 						   .orElseThrow(() -> new IllegalArgumentException("Estudante não encontrado para a matricula fornecida."));
 		}
 		return null;
+	}
+	
+	public List<StudentsShortListGradesRecord> filterTop10Grades(){
+		return students.stream()
+						 .sorted(Comparator.comparing(Student::getGrade).reversed())
+						 .map(std -> new StudentsShortListGradesRecord(
+								 std.getRegistration(), 
+								 std.getName(),
+								 std.getGrade()
+								 ))
+						 .limit(10)
+						 .toList();
 	}
 	
 }
