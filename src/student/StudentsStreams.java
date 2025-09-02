@@ -40,4 +40,16 @@ public class StudentsStreams {
 
 	}
 	
+	public StudentShortListRecord verifyRegistration(Integer registration) {
+		var itExists = students.stream().anyMatch(stu -> stu.getRegistration().equals(registration));
+		if (itExists) {
+			return students.stream()
+						   .filter(stu -> stu.getRegistration().equals(registration))
+						   .findFirst()
+						   .map(stu -> new StudentShortListRecord(stu.getRegistration(), stu.getName(), stu.getCourse()))
+						   .orElseThrow(() -> new IllegalArgumentException("Estudante não encontrado para a matricula fornecida."));
+		}
+		return null;
+	}
+	
 }
