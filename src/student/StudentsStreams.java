@@ -97,5 +97,23 @@ public class StudentsStreams {
 				       .toList();
 	}
 	
+	public List<StudentsShortListGradesRecord> filterRepprovedStudents(){
+		return students.stream()
+				       .filter(stu -> stu.getGrade() < 7.0)
+				       .map(stu -> new StudentsShortListGradesRecord(
+				    		   stu.getRegistration(), stu.getName(), stu.getGrade()   ))
+				       .sorted(Comparator.comparing(StudentsShortListGradesRecord::grade))
+				       .toList();
+	}
+	
+	public List<StudentsShortListGradesRecord> filterRepprovedStudents(String course){
+		return students.stream()
+				       .filter(stu -> stu.getGrade() < 7.0 && stu.getCourse().equals(course))
+				       .map(stu -> new StudentsShortListGradesRecord(
+				    		   stu.getRegistration(), stu.getName(), stu.getGrade()   ))
+				       .sorted(Comparator.comparing(StudentsShortListGradesRecord::grade))
+				       .toList();
+	}
+	
 	
 }
