@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import student.records.CourseGradesRecord;
+import student.records.CourseQuantityRecord;
 import student.records.StudentShortListRecord;
 import student.records.StudentsShortListGradesRecord;
 
@@ -118,7 +119,7 @@ public class StudentsStreams {
 				       .toList();
 	}
 	
-	public List<CourseGradesRecord> AverageGradeByCourse(){
+	public List<CourseGradesRecord> averageGradeByCourse(){
 		return students.stream()
 						.collect(Collectors.groupingBy(
 									Student::getCourse,
@@ -131,6 +132,20 @@ public class StudentsStreams {
 								))
 						.sorted(Comparator.comparing(CourseGradesRecord::grade).reversed())
 						.toList();
+	}
+	
+	public List<CourseQuantityRecord> qtdStudentsByCourse(){
+		return students.stream()
+				          .collect(Collectors.groupingBy(
+				        		  Student::getCourse,
+				        		  Collectors.counting()
+				          ))
+				          .entrySet().stream()
+				          .map(stu -> new CourseQuantityRecord(
+				        		  stu.getKey(), 
+				        		  stu.getValue().intValue() ))
+				          .sorted(Comparator.comparing(CourseQuantityRecord::course))
+				          .toList();
 	}
 	
 	
