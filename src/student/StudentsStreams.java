@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import student.records.CourseGradesRecord;
 import student.records.CourseQuantityRecord;
+import student.records.GenderByCourseRecord;
 import student.records.StudentShortListRecord;
 import student.records.StudentsShortListGradesRecord;
 
@@ -147,6 +148,30 @@ public class StudentsStreams {
 				          .sorted(Comparator.comparing(CourseQuantityRecord::course))
 				          .toList();
 	}
+	
+	public CourseQuantityRecord qtdStudentsByCourse(String course) {
+		return new CourseQuantityRecord(
+						course, 
+						(int) students.stream().filter(stu -> stu.getCourse().equals(course)).count()
+				    );
+	}
+	
+	public List<GenderByCourseRecord> qtdGenderByCourseRecord(){
+		return students.stream()
+				          .collect(Collectors.groupingBy(
+				        		  Student::getCourse,
+				        		  Collectors.groupingBy(Student::getGender, Collectors.counting())
+				          ))
+				          .entrySet().stream()
+				          .map(stu -> new GenderByCourseRecord(  
+				        		  stu.getKey(),
+				        		  stu.getValue().getOrDefault("male", 0L).intValue(),
+				        		  stu.getValue().getOrDefault("female", 0L).intValue()
+				           ))
+				          .sorted(Comparator.comparing(GenderByCourseRecord::course))
+				          .toList();
+	}
+	
 	
 	
 }
